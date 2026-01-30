@@ -65,4 +65,6 @@ group :development do
   gem "web-console"
 
   gem "annotaterb"
+
+  gem "i18n-tasks"
 end
