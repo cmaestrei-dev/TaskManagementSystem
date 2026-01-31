@@ -1,17 +1,17 @@
 %div{id: dom_id(task)}
   %p
-    %strong Name:
+    %strong= Task.human_attribute_name(:name) + ":"
     = task.name
 
   %p
-    %strong Description:
+    %strong= Task.human_attribute_name(:description) + ":"
     = task.description
 
   %p
-    %strong Due date:
+    %strong= Task.human_attribute_name(:due_date) + ":"
     = task.due_date
 
   %p
-    %strong Category:
-    = task.category_id
+    %strong= Task.human_attribute_name(:category) + ":"
+    = task.category&.name
 

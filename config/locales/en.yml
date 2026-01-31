@@ -5,6 +5,9 @@ en:
       category:
         one: Categoría
         others: Categorías
+      task:
+        one: Tarea
+        others: Tareas
   categories:
     form:
       description: Description
@@ -12,11 +15,34 @@ en:
     new_category: New category
     new_task: New task
   common:
-    back: Atrás
+    back: Common
+    destroy: "Destroy"
+    edit: "Edit"
   hello: Hello world
+  task:
+    errors:
+      invalid_due_date: Invalid due date
   tasks:
+    create:
+      created: "Task was successfully created."
+    update:
+      updated: "Task was successfully updated."
+    destroy:
+      destroyed: "Task was successfully destroyed."
+    show:
+      edit: "Edit this task"
+      back: "Back to tasks"
+      destroy: "Destroy this task"
+    edit:
+      title: "Editing task"
+      show: "Show this task"
+    index:
+      title: "Tasks"
+      show: "Show this task"
+      back: "Back to tasks"
     form:
       category: Category
       description: Description
       due_date: Due date
       name: Name
+    new_task: New task

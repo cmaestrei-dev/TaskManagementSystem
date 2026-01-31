@@ -3,25 +3,62 @@ es:
   activerecord:
     models:
       category:
-        one: Categoría
-        others: Categorías
+        one: "Categoría"
+        other: "Categorías"
       task:
-        one: Tarea
-        others: Tareas
+        one: "Tarea"
+        other: "Tareas"
+    attributes:
+      task:
+        name: "Nombre"
+        description: "Descripción"
+        due_date: "Fecha de vencimiento"
+        category: "Categoría"
+
+  task:
+    errors:
+      invalid_due_date: "no puede estar en el pasado"
+
+  common:
+    back: "Atrás"
+    destroy: "Eliminar"
+    edit: "Editar"
 
   categories:
+    new_category: "Nueva Categoría"
+    new_task: "Nueva tarea"
     form:
-      description: Descripción
-      name: Nombre
-    new_category: Nueva Categoría
-    
-  common:
-    back: Atrás
+      name: "Nombre"
+      description: "Descripción"
 
   tasks:
+    create:
+      created: "Tarea creada exitosamente."
+    update:
+      updated: "Tarea actualizada correctamente."
+    destroy:
+      destroyed: "La tarea ha sido eliminada."
+
+    show:
+      edit: "Editar esta tarea"
+      back: "Volver a tareas"
+      destroy: "Eliminar esta tarea"
+    edit:
+      title: "Tarea de edición"
+      show: "Mostrar esta tarea"
+      back: "Volver a tareas"
+    index:
+      title: "Tareas"
+      show: "Mostrar esta tarea"
+    new_task: "Nueva Tarea"
     form:
-      category: Categoría
-      description: Descripción
-      due_date: Fecha de Vencimiento
-      name: Nombre
-    new_task: Nueva Tarea
+      name: "Nombre"
+      description: "Descripción"
+      due_date: "Fecha de Vencimiento"
+      category: "Categoría"
+
+  helpers:
+    submit:
+      task:
+        create: "Crear Tarea"
+        update: "Actualizar Tarea"
