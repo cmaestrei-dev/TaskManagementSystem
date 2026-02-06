@@ -1,5 +1,5 @@
 class AddOwnerToTask < ActiveRecord::Migration[8.1]
   def change
-    add_reference :tasks, :user, null: false, foreign_key: true
+    add_reference :tasks, :owner, null: false, foreign_key: { to_table: :users }, index: true
   end
 end
