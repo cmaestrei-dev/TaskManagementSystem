@@ -22,7 +22,11 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-   @task = current_user.tasks.build(task_params)
+    @task = current_user.tasks.build(task_params)
+    unless @task.valid?
+      puts "🔴🔴🔴 ERROR REAL: #{@task.errors.full_messages} 🔴🔴🔴"
+      puts "🔴🔴 ERROR EN PARTICIPATIONS: #{@task.participations.map { |p| p.errors.full_messages }} 🔴🔴"
+    end
 
     respond_to do |format|
       if @task.save
@@ -66,6 +70,12 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.expect(task: [ :name, :description, :due_date, :category_id ])
+      params.require(:task).permit(
+        :name, 
+        :description, 
+        :due_date, 
+        :category_id, 
+        participations_attributes: [:id, :user_id, :role, :_destroy]
+      )
     end
 end

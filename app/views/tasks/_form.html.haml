@@ -8,6 +8,13 @@
     = f.input :description
     = f.input :due_date
     = f.association :category
-
+    
+    #addParticipants
+      = link_to_add_association 'Agregar participante', f, :participations, class: 'btn btn-primary', data: { association_insertion_node: '.participants-container', association_insertion_method: 'append' }
+    
+    .participants-container
+      = f.simple_fields_for :participations do |g|
+        = render 'participating_fields', f: g
+      
   .form-actions
     = f.button :submit

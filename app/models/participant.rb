@@ -21,5 +21,7 @@
 #
 class Participant < ApplicationRecord
   belongs_to :user
-  belongs_to :task
+  belongs_to :task, inverse_of: :participations
+
+  validates :user, presence: true
 end
