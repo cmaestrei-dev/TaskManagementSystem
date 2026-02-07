@@ -21,7 +21,15 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  has_many :owned_tasks, foreign_key: 'owner_id', class_name: 'Task', dependent: :destroy
+
+# 1. Tareas propias (CAMBIO DE NOMBRE: de :owned_tasks a :tasks)
+  # Al llamarla ':tasks', cuando hagas user.tasks, Rails sabrá que eres el dueño.
+  has_many :tasks, class_name: 'Task', foreign_key: 'owner_id', dependent: :destroy
+
+  # 2. Relación intermedia
   has_many :participations, class_name: 'Participant'
-  has_many :tasks, through: :participations
+
+  # 3. Tareas donde participo (CAMBIO DE NOMBRE: de :tasks a :participating_tasks)
+  # Agregamos source: :task para decirle que busque en la tabla 'tasks'
+  has_many :participating_tasks, through: :participations, source: :task
 end
