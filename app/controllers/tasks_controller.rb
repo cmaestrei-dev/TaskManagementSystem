@@ -6,11 +6,13 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-      @tasks = Task.left_joins(:participations).where(
-      'owner_id = ? OR participants.user_id = ?',
-      current_user.id,
-      current_user.id
-    ).distinct
+      @tasks = Task.left_joins(:participations)
+      .includes(:category)
+      .where(
+        'owner_id = ? OR participants.user_id = ?',
+        current_user.id,
+        current_user.id
+      ).distinct
   end
 
   # GET /tasks/1 or /tasks/1.json
