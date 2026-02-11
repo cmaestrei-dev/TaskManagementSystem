@@ -1,10 +1,16 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_task, only: %i[ show edit update destroy ]
+  load_and_authorize_resource
+  
+  #before_action :set_task, only: %i[ show edit update destroy ]
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = current_user.tasks
+      @tasks = Task.left_joins(:participations).where(
+      'owner_id = ? OR participants.user_id = ?',
+      current_user.id,
+      current_user.id
+    ).distinct
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -13,7 +19,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/new
   def new
-    @task = Task.new
+    #@task = Task.new
   end
 
   # GET /tasks/1/edit
@@ -23,11 +29,6 @@ class TasksController < ApplicationController
   # POST /tasks or /tasks.json
   def create
     @task = current_user.tasks.build(task_params)
-    unless @task.valid?
-      puts "🔴🔴🔴 ERROR REAL: #{@task.errors.full_messages} 🔴🔴🔴"
-      puts "🔴🔴 ERROR EN PARTICIPATIONS: #{@task.participations.map { |p| p.errors.full_messages }} 🔴🔴"
-    end
-
     respond_to do |format|
       if @task.save
         format.html { redirect_to @task, notice: t('tasks.create.created') }
@@ -64,9 +65,9 @@ class TasksController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_task
-      @task = Task.find(params.expect(:id))
-    end
+    #def set_task
+      #@task = Task.find(params.expect(:id))
+    #end
 
     # Only allow a list of trusted parameters through.
     def task_params
