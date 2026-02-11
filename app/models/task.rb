@@ -3,6 +3,7 @@
 # Table name: tasks
 #
 #  id          :bigint           not null, primary key
+#  code        :string
 #  description :text
 #  due_date    :date
 #  name        :string
@@ -37,9 +38,15 @@ class Task < ApplicationRecord
   validates :name, uniqueness: { case_sensitive: false, scope: :owner_id }
   validate :due_date_validity
 
+  before_create :create_code
+
   def due_date_validity
     return if due_date.blank?
     return if due_date >= Date.today
     errors.add :due_date, I18n.t('task.errors.invalid_due_date')
+  end
+
+  def create_code
+    self.code = "#{owner_id}#{Time.now.to_i.to_s(36)}#{SecureRandom.hex(8)}"
   end
 end

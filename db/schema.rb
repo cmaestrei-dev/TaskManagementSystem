@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_07_000302) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_11_171515) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -33,6 +33,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_07_000302) do
 
   create_table "tasks", force: :cascade do |t|
     t.bigint "category_id", null: false
+    t.string "code"
     t.datetime "created_at", null: false
     t.text "description"
     t.date "due_date"
