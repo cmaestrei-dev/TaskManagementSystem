@@ -73,4 +73,6 @@ group :development do
   gem "annotaterb"
 
   gem "i18n-tasks"
+
+  gem "letter_opener"
 end

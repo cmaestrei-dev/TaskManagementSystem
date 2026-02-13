@@ -39,6 +39,7 @@ class Task < ApplicationRecord
   validate :due_date_validity
 
   before_create :create_code
+  after_create :send_email
 
   def due_date_validity
     return if due_date.blank?
@@ -48,5 +49,12 @@ class Task < ApplicationRecord
 
   def create_code
     self.code = "#{owner_id}#{Time.now.to_i.to_s(36)}#{SecureRandom.hex(8)}"
+  end
+
+  def send_email
+    # CORRECCIÓN: Usar 'participating_users' en lugar de 'participants'
+    (participating_users + [owner]).each do |user|
+      ParticipantMailer.with(user: user, task: self).new_task_email.deliver_later
+    end
   end
 end
