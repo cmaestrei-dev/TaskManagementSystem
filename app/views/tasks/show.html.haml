@@ -2,9 +2,15 @@
 
 = render @task
 
+.notes-container
+  - @task.notes.each do |note|
+    %p= note.body
+  = simple_form_for Note.new, url: task_notes_path(task_id: @task.id) do |f|
+    = f.input :body, label: false, as: :string, placeholder: 'Digite su nota', input_html: { autocomplete: 'off' }
+
 %div
   = link_to t('.edit'), edit_task_path(@task)
   |
   = link_to t('.back'), tasks_path
-
+  |
   = button_to t('.destroy'), @task, method: :delete

@@ -25,15 +25,13 @@
 class Task < ApplicationRecord
   belongs_to :category
   belongs_to :owner, class_name: 'User'
-
   has_many :participations, class_name: 'Participant', dependent: :destroy, inverse_of: :task
-
   has_many :participating_users, through: :participations, source: :user
-  
+  has_many :notes, dependent: :destroy
+
   accepts_nested_attributes_for :participations, reject_if: :all_blank, allow_destroy: true
-  
+
   validates :participations, presence: true
-  
   validates :name, :description, presence: true
   validates :name, uniqueness: { case_sensitive: false, scope: :owner_id }
   validate :due_date_validity
