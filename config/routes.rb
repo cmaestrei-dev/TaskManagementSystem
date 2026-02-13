@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :tasks do
     resources :notes, only: [:create], controller: 'tasks/notes'
+    get :add_participation, on: :collection
   end
   resources :categories
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

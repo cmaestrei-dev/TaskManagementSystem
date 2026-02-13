@@ -1,13 +1,28 @@
-%p{style: "color: green"}= notice
+.d-flex.justify-content-between.align-items-center.mb-4
+  %h1.h2.fw-bold Mis Tareas
+  = link_to new_task_path, class: 'btn btn-primary rounded-pill px-4' do
+    %i.fas.fa-plus.me-2
+    Nueva Tarea
 
-- content_for :title, t('.title')
-
-%h1= t('.title')
-
-%div{id: "tasks"}
+.row
   - @tasks.each do |task|
-    = render task
-    %p
-      = link_to t('.show'), task
-
-= link_to t('tasks.new_task'), new_task_path
+    .col-md-6.col-lg-4.mb-4
+      .card.h-100.border-0.shadow-sm
+        .card-body
+          .d-flex.justify-content-between.mb-2
+            %span.badge.rounded-pill.bg-primary-subtle.text-primary.border.border-primary-subtle
+              = task.category.name
+            %small.text-muted= "##{task.code}"
+          
+          %h5.card-title.fw-bold= task.name
+          %p.card-text.small.text-muted= truncate(task.description, length: 100)
+          
+          .d-flex.align-items-center.mt-3
+            = image_tag "https://robohash.org/#{task.owner.email}", class: "rounded-circle me-2", width: 25
+            %small.text-muted= task.owner.email
+        
+        .card-footer.bg-transparent.border-0.d-flex.justify-content-between.align-items-center.pb-3
+          %small.text-secondary
+            %i.far.fa-calendar-alt.me-1
+            = l task.due_date, format: :short rescue "Sin fecha"
+          = link_to 'Ver', task, class: 'btn btn-sm btn-outline-dark px-3 rounded-pill'

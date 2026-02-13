@@ -24,4 +24,6 @@ class Participant < ApplicationRecord
   belongs_to :task, inverse_of: :participations
 
   validates :user, presence: true
+
+  enum :role, { responsible: 1, follower: 2 }
 end

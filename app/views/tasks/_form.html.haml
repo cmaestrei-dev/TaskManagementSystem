@@ -1,20 +1,38 @@
--# frozen_string_literal: true
 = simple_form_for(@task) do |f|
   = f.error_notification
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
-  .form-inputs
-    = f.input :name
-    = f.input :description
-    = f.input :due_date
-    = f.association :category
-    
-    #addParticipants
-      = link_to_add_association 'Agregar participante', f, :participations, class: 'btn btn-primary', data: { association_insertion_node: '.participants-container', association_insertion_method: 'append' }
-    
-    .participants-container
-      = f.simple_fields_for :participations do |g|
-        = render 'participation_fields', f: g
+  .card.shadow-sm.border-0.mb-4
+    .card-body.p-4
+      .row
+        .col-md-8
+          = f.input :name, label: 'Nombre de la tarea', input_html: { class: 'form-control-lg' }
+        .col-md-4
+          = f.input :due_date, as: :string, input_html: { type: :date, class: 'form-control' }
       
-  .form-actions
-    = f.button :submit
+      .mb-3
+        = f.input :description, label: 'Descripción detallada', input_html: { rows: 4 }
+      
+      .row
+        .col-md-6
+          = f.association :category, prompt: 'Selecciona una categoría', input_html: { class: 'form-select' }
+
+  .card.bg-light.border-0.mb-4
+    .card-body.p-4
+      .d-flex.justify-content-between.align-items-center.mb-3
+        %h5.fw-bold.mb-0 
+          %i.fas.fa-users.me-2
+          Participantes
+        -# Aquí usamos tu link de Cocoon con clases de Bootstrap
+        = link_to_add_association f, :participations, class: 'btn btn-sm btn-outline-primary rounded-pill', |
+          data: { association_insertion_node: '.participants-container', association_insertion_method: 'append' } do |
+          %i.fas.fa-plus.me-1
+          Añadir Participante
+
+      .participants-container
+        = f.simple_fields_for :participations do |g|
+          = render 'participation_fields', f: g
+
+  .d-flex.justify-content-end.gap-2
+    = link_to 'Cancelar', tasks_path, class: 'btn btn-light px-4'
+    = f.button :submit, class: 'btn btn-primary px-5 shadow-sm'

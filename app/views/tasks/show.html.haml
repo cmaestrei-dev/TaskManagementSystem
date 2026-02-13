@@ -1,17 +1,36 @@
-%p{style: "color: green"}= notice
+.container.mt-5
+  .row
+    .col-lg-8.mx-auto
+      .card.shadow-sm.border-0
+        .card-header.bg-white.py-3.d-flex.justify-content-between.align-items-center
+          %h1.h3.mb-0.fw-bold= @task.name
+          %span.badge.rounded-pill.bg-primary= @task.category.name
 
-= render @task
+        .card-body.p-4
+          %p.text-muted.mb-4
+            %i.far.fa-calendar-alt.me-2
+            %strong Fecha límite:
+            = @task.due_date.strftime("%d de %B, %Y")
 
-.notes-container
-  #notes
-    - @task.notes.each do |note|
-      = render "tasks/notes/note", note: note
+          .mb-4
+            %h5.fw-bold Descripción
+            %p.text-secondary= @task.description
 
-  = render "tasks/notes/form", task: @task, note: Note.new
+          %hr
 
-%div
-  = link_to t('.edit'), edit_task_path(@task)
-  |
-  = link_to t('.back'), tasks_path
-  |
-  = button_to t('.destroy'), @task, method: :delete
+          %h5.fw-bold.mb-3 Participantes
+          .list-group.list-group-flush
+            - @task.participations.each do |participation|
+              .list-group-item.d-flex.justify-content-between.align-items-center.border-0.px-0
+                .d-flex.align-items-center
+                  .avatar-circle.me-3
+                    = participation.user.email[0].upcase
+                  %span= participation.user.email
+                %span.badge.bg-light.text-dark.border= participation.role
+
+        .card-footer.bg-light.p-3.d-flex.gap-2
+          = link_to edit_task_path(@task), class: 'btn btn-outline-dark' do
+            %i.fas.fa-edit.me-1
+            Editar
+          = link_to tasks_path, class: 'btn btn-link text-decoration-none text-muted' do
+            Volver a la lista

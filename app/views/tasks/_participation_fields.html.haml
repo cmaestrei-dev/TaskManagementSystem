@@ -1,5 +1,11 @@
-.nested-fields
-    = f.input :user_id, as: :select, collection: User.where.not(id: current_user.id)
-    = f.input :role
-
-    = link_to_remove_association "Eliminar participante", f
+.nested-fields.mb-3.p-3.bg-white.border.rounded.shadow-sm
+  .row.align-items-center
+    .col-md-5
+      = f.association :user, label: false, placeholder: 'Usuario', collection: User.all, label_method: :email, input_html: { class: 'form-select' }
+    .col-md-5
+      = f.input :role, label: false, placeholder: 'Rol', collection: Participant.roles.keys, input_html: { class: 'form-select' }
+    .col-md-2.text-end
+      -# Este helper es vital para Cocoon
+      = link_to_remove_association f, class: 'btn btn-outline-danger btn-sm' do
+        %i.fas.fa-trash-alt
+        Quitar

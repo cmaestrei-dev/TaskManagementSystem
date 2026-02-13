@@ -1,0 +1,5 @@
+- flash.each do |name, msg|
+  - type = name.to_s == 'notice' ? 'success' : 'danger'
+  .alert.alert-dismissible.fade.show{ class: "alert-#{type}", role: "alert" }
+    = msg
+    %button.btn-close{ type: "button", "data-bs-dismiss": "alert" }
