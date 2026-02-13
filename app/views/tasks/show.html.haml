@@ -3,10 +3,11 @@
 = render @task
 
 .notes-container
-  - @task.notes.each do |note|
-    %p= note.body
-  = simple_form_for Note.new, url: task_notes_path(task_id: @task.id) do |f|
-    = f.input :body, label: false, as: :string, placeholder: 'Digite su nota', input_html: { autocomplete: 'off' }
+  #notes
+    - @task.notes.each do |note|
+      = render "tasks/notes/note", note: note
+
+  = render "tasks/notes/form", task: @task, note: Note.new
 
 %div
   = link_to t('.edit'), edit_task_path(@task)

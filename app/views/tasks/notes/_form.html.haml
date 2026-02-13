@@ -1,0 +1,3 @@
+= simple_form_for [task, note], html: { id: "new_note" } do |f|
+  = f.input :body, label: false, as: :string, placeholder: 'Digite su nota', input_html: { autocomplete: 'off' }
+  = f.submit "Comentar"
